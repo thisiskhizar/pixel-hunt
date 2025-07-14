@@ -17,7 +17,11 @@ const GameGrid = () => {
         spacing={6}
       >
         {isLoading &&
-          skeletons.map((skeleton) => <GameCardSkeleton key={skeleton} />)}
+          skeletons.map((skeleton) => (
+            <GameCardContainer key={skeleton}>
+              <GameCardSkeleton key={skeleton} />
+            </GameCardContainer>
+          ))}
 
         {games.map((game) => (
           <GameCardContainer key={game.id}>
