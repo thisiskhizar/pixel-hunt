@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem, Show } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, Show } from "@chakra-ui/react";
 import { useState } from "react";
 
 import GameGrid from "../components/GameGrid";
@@ -8,12 +8,9 @@ import NavBar from "../components/NavBar";
 import PlatformSelector from "../components/PlatformSelector";
 import SortSelector from "../components/SortSelector";
 
-import type { Genre } from "../hooks/useGenres";
-import type { Platform } from "../hooks/usePlatforms";
-
 export interface GameQuery {
-  genre: Genre | null;
-  platform: Platform | null;
+  genreId?: number;
+  platformId?: number;
   sortOrder: string;
   searchText: string;
 }
@@ -21,7 +18,7 @@ export interface GameQuery {
 const HomePage = () => {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
-  return ( 
+  return (
     <div style={{ padding: "5px" }}>
       <Grid
         templateAreas={{
@@ -43,8 +40,10 @@ const HomePage = () => {
         <Show above="lg">
           <GridItem area="aside" paddingX={5}>
             <GenreList
-              onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
-              selectedGenre={gameQuery.genre}
+              onSelectGenre={(genre) =>
+                setGameQuery({ ...gameQuery, genreId: genre.id })
+              }
+              selectedGenreId={gameQuery.genreId}
             />
           </GridItem>
         </Show>
@@ -54,9 +53,9 @@ const HomePage = () => {
             <Flex marginBottom={5}>
               <Box marginRight={5}>
                 <PlatformSelector
-                  selectedPlatform={gameQuery.platform}
+                  selectedPlatformId={gameQuery.platformId}
                   onSelectPlatform={(platform) =>
-                    setGameQuery({ ...gameQuery, platform })
+                    setGameQuery({ ...gameQuery, platformId: platform.id })
                   }
                 />
               </Box>
@@ -66,6 +65,12 @@ const HomePage = () => {
                   setGameQuery({ ...gameQuery, sortOrder })
                 }
               />
+              <Button
+                onClick={() => setGameQuery({} as GameQuery)}
+                marginLeft={5}
+              >
+                Reset Filters
+              </Button>
             </Flex>
           </Box>
           <GameGrid gameQuery={gameQuery} />
