@@ -27,10 +27,10 @@ const GameGrid = () => {
         </Text>
       }
     >
-      <SimpleGrid
+       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-        padding="10px"
         spacing={6}
+        padding="10px"
       >
         {isLoading &&
           skeletons.map((skeleton) => (
@@ -38,7 +38,6 @@ const GameGrid = () => {
               <GameCardSkeleton />
             </GameCardContainer>
           ))}
-
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.results.map((game) => (
